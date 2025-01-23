@@ -5,7 +5,7 @@ import { ViewConfigInjectionToken } from '../../view/core';
 
 export const BikeViewConfig: ViewConfig = {
   label: 'Bike',
-  loadView: () => import('../view').then((m) => m.bikeView),
+  loadView: () => import('../view/bike-view').then((m) => m.bikeView),
 };
 
 export const provideBikeViewConfig = (): Provider[] => [
