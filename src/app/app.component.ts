@@ -5,7 +5,7 @@ import { RouterOutlet } from '@angular/router';
   selector: 'app-root',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [RouterOutlet],
-  template: `<h1>Smart-View-Injection</h1>
+  template: `<h1>Data-Injection</h1>
     <router-outlet />`,
 })
 export class AppComponent {}

@@ -1,4 +1,4 @@
-# Smart-View-Injection
+# Data-Injection
 
 Showcasing lazy loading of data.
 

@@ -1,5 +1,5 @@
 {
-  "name": "view-injection",
+  "name": "data-injection",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
