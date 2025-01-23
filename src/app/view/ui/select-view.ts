@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   resource,
   signal,
 } from '@angular/core';
@@ -18,14 +19,12 @@ import { injectMulti } from './inject-multi';
     <select [(ngModel)]="selectedViewConfig">
       <option [ngValue]="null" [disabled]="true">choose</option>
       @for (viewConfig of viewConfigs; track $index) {
-      <option [ngValue]="viewConfig">{{ viewConfig.label }}</option>
+        <option [ngValue]="viewConfig">{{ viewConfig.label }}</option>
       }
     </select>
 
     <div>
-      @let cmp = view.value(); @if (cmp){
-      {{ cmp.data }}
-      }
+      {{ viewData() }}
     </div>`,
 })
 export class SelectView {
@@ -42,5 +41,10 @@ export class SelectView {
 
       return await viewConfig.loadView();
     },
+  });
+
+  protected readonly viewData = computed(() => {
+    const view = this.view.value();
+    return view == null ? '(no view selected)' : view.data;
   });
 }
