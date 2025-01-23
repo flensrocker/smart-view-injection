@@ -18,8 +18,18 @@ and one in [`src/app/car/core/car-view-config.ts`](src/app/car/core/car-view-con
 There's also the needed "provide" function, to inject the `ViewConfig` into the dependency injection.
 The key is to use the `multi: true` property.
 
+Those have to be added to the dependency injection container in the [`src/app/app.config.ts`](src/app/app.config.ts).
+
 The component `SelectView` in [`src/app/view/ui/select-view.ts`](src/app/view/ui/select-view.ts) injects all provided `ViewConfig`s.
 With a dropdown the data to be loaded by the resource can be selected.
 
 The lazy loaded "data" is shown below the selector.
 Do what you like with that data...
+
+Build the app with the development configuration and study the emitted chunks:  
+`ng build --configuration development`
+
+Also have a look at the "network" tab in the dev tools when switching between the options.
+On the first time you should see the loading of the requested chunk.
+
+And the main chunk is as small as possible...
