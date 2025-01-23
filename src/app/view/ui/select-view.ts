@@ -1,20 +1,46 @@
-import { ChangeDetectionStrategy, Component, computed } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  resource,
+  signal,
+} from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
-import { ViewConfigInjectionToken } from '../core';
+import { ViewConfig, ViewConfigInjectionToken } from '../core';
 
 import { injectMulti } from './inject-multi';
 
 @Component({
   selector: 'select-view',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [FormsModule],
   template: `Select View
-    <select>
-      <option [value]="null" [disabled]="true">choose</option>
-      @for (view of views; track view.label) {
-      <option [value]="view">{{ view.label }}</option>
+    <select [(ngModel)]="selectedViewConfig">
+      <option [ngValue]="null" [disabled]="true">choose</option>
+      @for (viewConfig of viewConfigs; track $index) {
+      <option [ngValue]="viewConfig">{{ viewConfig.label }}</option>
       }
-    </select>`,
+    </select>
+
+    <div>
+      @let cmp = view.value(); @if (cmp){
+      {{ cmp.data }}
+      }
+    </div>`,
 })
 export class SelectView {
-  protected readonly views = injectMulti(ViewConfigInjectionToken);
+  protected readonly viewConfigs = injectMulti(ViewConfigInjectionToken);
+
+  protected readonly selectedViewConfig = signal<ViewConfig | null>(null);
+
+  protected readonly view = resource({
+    request: this.selectedViewConfig,
+    loader: async ({ request: viewConfig }) => {
+      if (viewConfig == null) {
+        return null;
+      }
+
+      return await viewConfig.loadView();
+    },
+  });
 }

@@ -1,1 +1,3 @@
-export type View = object;
+export type View = {
+  readonly data: string;
+};
